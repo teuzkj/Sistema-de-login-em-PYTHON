@@ -2,7 +2,7 @@ print ("Seja bem vindo(a) ao sistema de login!")
 print ("Vamos começar")
 print ("-" * 50)
 nome = input("NOME COMPLETO: ")   #INPUT PARA DIGITAR O NOME DO USUÁRIO
-print("Olá, {}, tudo bem?".format(nome))
+print(f"Olá, {nome}, tudo bem?")
 while True:
     idade = int(input("IDADE: "))   #INPUT PARA DEFINIR A IDADE DO USUÁRIO
 
@@ -23,14 +23,14 @@ while True:
         senha = int(input("SENHA: "))
         break
     except ValueError:
-        print("Erro: A senha deve conter apenas números. Tente novamente!")
+        print("ERRO: A senha deve conter apenas números. Tente novamente!")
 
 # Confirmar informações do usuário
 escolhas = (1,2,3)
-print('''Olá {},Voce confirma as informações?
+print(f'''Olá {nome},Voce confirma as informações?
 [1]Não. 
 [2]Sim. 
-[3]Alterar as informações.'''.format(nome))
+[3]Alterar as informações.''')
 escolha = int(input("Escreva a escolha: "))
 
 if escolha == 1:
@@ -38,9 +38,9 @@ if escolha == 1:
     exit()
 
 elif escolha == 2:
-    print ("Seja bem vindo(a), {}.".format(nome))
-    print ("EMAIL: {}".format(email))
-    print ("SENHA: {}".format(senha))
+    print (f"Seja bem vindo(a), {nome}.")
+    print (f"EMAIL: {email}")
+    print (f"SENHA: {"*" * len(str(senha))}")
 
 elif escolha == 3:
     print ("Vamos alterar suas informações.")
@@ -56,23 +56,66 @@ elif escolha == 3:
     print("Digite agora o novo email")
     novo_email = input("EMAIL: ")
     print("Digite agora a sua nova senha apenas com números.")
-    nova_senha = int(input("SENHA: "))
     while True:
         try: 
-            senha = int(input("SENHA: "))
+            nova_senha = int(input("SENHA: "))
             break
         except ValueError:
-            print("Erro: A senha deve conter apenas números. Tente novamente!")
+            print("ERRO: A senha deve conter apenas números. Tente novamente!")
 
-        # Atualizando as informações
+    # Atualizando as informações
     nome = novo_nome
     idade = nova_idade
     email = novo_email
     senha = nova_senha
 
     print ("Informações atualizadas com sucesso!")
-    print ("Seja bem vindo(a), {}.".format(nome))
-    print ("IDADE: {} \nEMAIL: {} \nSENHA: {} ".format(idade,email,senha))
+    print (f"Seja bem vindo(a), {nome}.")
+    print (f"IDADE: {idade} \nEMAIL: {email} \nSENHA: {"*" * len(str(senha))} ")
+
+# Escolher fazer login
+print("-" * 50)
+escolhas_login = (1,2,3)
+print(f'''Olá {nome}, agora o que vamos fazer?
+[1]Sair
+[2]
+[3]Login''')
+escolha_login = int(input("Escreva a escolha: "))
+
+if escolha_login == 1:
+    print("Que pena, até a próxima.")
+    exit()
+
+elif escolha_login == 2:
+    print("ABA AINDA EM DESENVOLVIMENTO")
+
+elif escolha_login == 3:
+    print("Digite agora email cadastrado")
+    email_login = input("EMAIL: ")
+    if email_login != email:
+        print("Email não encontrado em nosso sistema. Tente novamente ou cadastre-se")
+    else:
+        print("Email encontrado em nosso sistema!")
+
+        # verifica a senha com 3 tentativas
+        tentativas = 3
+        while tentativas > 0:
+            try:
+                senha_login = int(input("Digite a sua senha numérica: "))
+
+                if senha_login == senha:
+                    print("-" * 50)
+                    print("LOGIN EFETUADO COM SUCESSO!")
+                    print(f"Seja bem vindo(a) {nome}.")
+                    break
+                else:
+                    tentativas -= 1
+                    if tentativas > 0:
+                        print(f"Senha incorreta. Tentativas restantes: {tentativas}")
+                    else:
+                        print("Voce excedeu o número de tentativas. Tente mais tarde.")
+            except ValueError:
+                print("ERRO: A senha deve conter apenas números. Tente novamente!")
 
 
 
