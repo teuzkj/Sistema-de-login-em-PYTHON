@@ -1,3 +1,4 @@
+print ("-" * 50)
 print ("Seja bem vindo(a) ao sistema de login!")
 print ("Vamos começar")
 print ("-" * 50)
@@ -12,9 +13,10 @@ while True:
         print("Por favor, insira uma idade válida (18 anos ou mais).")   
     else:
         break # Sai do loop quando a idade for válida
-# Se o usuário tiver 18 anos ou mais o programa ira prosseguir
 
+# Se o usuário tiver 18 anos ou mais o programa ira prosseguir
 print("Voce tem idade o suficiente para fazer o login!")
+print ("-" * 50)
 print("Digite agora o seu email")
 email = input("EMAIL: ")
 print("Digite a sua senha apenas com números.")
@@ -26,6 +28,7 @@ while True:
         print("ERRO: A senha deve conter apenas números. Tente novamente!")
 
 # Confirmar informações do usuário
+print ("-" * 50)
 escolhas = (1,2,3)
 print(f'''Olá {nome},Voce confirma as informações?
 [1]Não. 
@@ -34,60 +37,95 @@ print(f'''Olá {nome},Voce confirma as informações?
 escolha = int(input("Escreva a escolha: "))
 
 if escolha == 1:
+    print ("-" * 50)
     print("Que pena, até mais...")
     exit()
 
 elif escolha == 2:
+    print ("-" * 50)
     print (f"Seja bem vindo(a), {nome}.")
     print (f"EMAIL: {email}")
     print (f"SENHA: {"*" * len(str(senha))}")
 
 elif escolha == 3:
-    print ("Vamos alterar suas informações.")
-    confirmar_email = input("Digite o email anterior: ")
-    if confirmar_email == email:
-        print("Voce digitou o email anterior corretamente!")
-        confirmar_senha = int(input("Digite a senha anterior: "))
-        if confirmar_senha == senha:
-            print("Voce digitou a senha corretamente!")
-            print("Agora voce pode realizar alterações.")
-            print("Alterações")
-            novo_nome = input("NOME COMPLETO: ")
-            while True:
-                nova_idade = int(input("IDADE: "))
-                if nova_idade <= 17:
-                    print("Voce não tem idade o suficiente para fazer login no site!")
-                    print("Por favor, insira uma idade válida (18 anos ou mais).")  
-                else:
-                    break
-            print("Voce tem idade o suficiente para fazer o login!")
-            print("Digite agora o novo email")
-            novo_email = input("EMAIL: ")
-            print("Digite agora a sua nova senha apenas com números.")
-            while True:
-                try: 
-                    nova_senha = int(input("SENHA: "))
-                    break
-                except ValueError:
-                    print("ERRO: A senha deve conter apenas números. Tente novamente!")
+    print ("-" * 50)
+    print("Vamos alterar as suas informações.")
 
+    # Verificando o email com 3 tentativas
+    email_correto = False
+    for tentativa in range(3): #Permite 3 tentativas
+        confirmar_email = input("Digite o email anterior: ")
+        if confirmar_email == email:
+            print("Voce digitou o email anterior corretamente!")
+            email_correto = True
+            break
         else: 
-            print("Senha não encontrada em nosso sistema")
-            exit()
+            print("Email incorreto!")
+            if tentativa < 2: # Mostra apenas se houver mais tentativas
+                print(f"Voce tem mais {2 - tentativa} tentativa(s).")
 
-    else:
-        print("Email não encontrado em nosso sistema")
+    if not email_correto:
+        print("Número máximo de tentativas excedido para o email.")
+        exit() 
+
+    # Verificação da senha com tentativas
+    senha_correta = False
+    for tentativa in range(3): # Permite 3 tentativas
+        try:
+            confirmar_senha = int(input("Digite a senha anterior: "))
+            if confirmar_senha == senha:
+                print("Você digitou a senha corretamente!")
+                senha_correta = True 
+                break
+            else:
+                print("Senha incorreta!")
+                if tentativa < 2: # Mostra apenas se tiver mais tentativas
+                    print(f"Você tem mais {2 - tentativa} tentativa(s).")
+        except ValueError:
+            print("A senha deve conter apenas números")
+            if tentativa < 2: 
+                print(f"Você tem mais {2 - tentativa} tentativa(s).")
+    if not senha_correta: 
+        print("Número máximo de tentativas excedido para a senha.")
         exit()
 
-    # Atualizando as informações
-    nome = novo_nome
-    idade = nova_idade
-    email = novo_email
-    senha = nova_senha
+    # Se chegou até aqui, ambas as verificações passaram 
+    print("Agora você pode realizar as alterações.")
+    print ("-" * 50)
+    print("Alterações")
+    novo_nome = input("NOME COMPLETO: ")
 
-    print ("Informações atualizadas com sucesso!")
-    print (f"Seja bem vindo(a), {nome}.")
-    print (f"IDADE: {idade} \nEMAIL: {email} \nSENHA: {"*" * len(str(senha))} ")
+    while True: 
+        nova_idade = int(input("IDADE: "))
+        if nova_idade <= 17:
+            print("Você não tem idade o suficiente para fazer o login no site!")
+            print("Por favor, insira uma idade válida (18 anos ou mais).")
+        else:
+            break
+
+    print("Você tem idade o suficiente para fazer o login!")
+    print ("-" * 50)
+    print("Digite agora o novo email")
+    novo_email = input("EMAIL: ")   
+
+    print("Digite agora a sua nova senha apenas com númneros.")
+    while True:
+        try:
+            nova_senha = int(input("SENHA: "))  
+            break
+        except ValueError:
+            print("ERRO: A senha deve conter apenas números. Tente novamente.")
+            
+# Atualizando as informações
+nome = novo_nome
+idade = nova_idade
+email = novo_email
+senha = nova_senha
+
+print ("-" * 50)
+print ("Informações atualizadas com sucesso!")
+print (f"Seja bem vindo(a), {nome}.")
+print (f"IDADE: {idade} \nEMAIL: {email} \nSENHA: {"*" * len(str(senha))} ")
 
 # Escolher fazer login
 print("-" * 50)
@@ -99,13 +137,16 @@ print(f'''Olá {nome}, agora o que vamos fazer?
 escolha_login = int(input("Escreva a escolha: "))
 
 if escolha_login == 1:
+    print ("-" * 50)
     print("Que pena, até a próxima.")
     exit()
 
 elif escolha_login == 2:
+    print ("-" * 50)
     print("ABA AINDA EM DESENVOLVIMENTO")
 
 elif escolha_login == 3:
+    print ("-" * 50)
     print("Digite agora email cadastrado")
     email_login = input("EMAIL: ")
     if email_login != email:
