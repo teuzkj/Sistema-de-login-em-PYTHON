@@ -1,3 +1,5 @@
+import time
+
 print ("-" * 50)
 print ("Seja bem vindo(a) ao sistema de login!")
 print ("Vamos começar")
@@ -9,13 +11,13 @@ while True:
 
 # Se o usuário tiver 17 anos ou menos o programa não ira prosseguir
     if idade <= 17:     
-        print("Voce não tem idade o suficiente para fazer login no site!")
+        print("Você não tem idade o suficiente para fazer login no site!")
         print("Por favor, insira uma idade válida (18 anos ou mais).")   
     else:
         break # Sai do loop quando a idade for válida
 
 # Se o usuário tiver 18 anos ou mais o programa ira prosseguir
-print("Voce tem idade o suficiente para fazer o login!")
+print("Você tem idade o suficiente para fazer o login!")
 print ("-" * 50)
 print("Digite agora o seu email")
 email = input("EMAIL: ")
@@ -30,11 +32,15 @@ while True:
 # Confirmar informações do usuário
 print ("-" * 50)
 escolhas = (1,2,3)
-print(f'''Olá {nome},Voce confirma as informações?
+print(f'''Olá {nome},Você confirma as informações?
 [1]Não. 
 [2]Sim. 
 [3]Alterar as informações.''')
 escolha = int(input("Escreva a escolha: "))
+print ("-" * 50)
+print("Carregando...")
+time.sleep(1)
+print("Carregamento concluído!")
 
 if escolha == 1:
     print ("-" * 50)
@@ -56,7 +62,7 @@ elif escolha == 3:
     for tentativa in range(3): #Permite 3 tentativas
         confirmar_email = input("Digite o email anterior: ")
         if confirmar_email == email:
-            print("Voce digitou o email anterior corretamente!")
+            print("Você digitou o email anterior corretamente!")
             email_correto = True
             break
         else: 
@@ -90,9 +96,14 @@ elif escolha == 3:
         exit()
 
     # Se chegou até aqui, ambas as verificações passaram 
+    print ("-" * 50)
+    print("Carregando...")
+    time.sleep(1)
+    print("Carregamento concluído!")
+    print ("-" * 50)
     print("Agora você pode realizar as alterações.")
     print ("-" * 50)
-    print("Alterações")
+    print("Realize as alterações")
     novo_nome = input("NOME COMPLETO: ")
 
     while True: 
@@ -116,6 +127,11 @@ elif escolha == 3:
         except ValueError:
             print("ERRO: A senha deve conter apenas números. Tente novamente.")
             
+print ("-" * 50)
+print("Carregando...")
+time.sleep(1)
+print("Carregamento concluído!")
+
 # Atualizando as informações
 nome = novo_nome
 idade = nova_idade
@@ -124,6 +140,7 @@ senha = nova_senha
 
 print ("-" * 50)
 print ("Informações atualizadas com sucesso!")
+print ("-" * 50)
 print (f"Seja bem vindo(a), {nome}.")
 print (f"IDADE: {idade} \nEMAIL: {email} \nSENHA: {"*" * len(str(senha))} ")
 
@@ -135,6 +152,10 @@ print(f'''Olá {nome}, agora o que vamos fazer?
 [2]
 [3]Login''')
 escolha_login = int(input("Escreva a escolha: "))
+print ("-" * 50)
+print("Carregando...")
+time.sleep(1)
+print("Carregamento concluído!")
 
 if escolha_login == 1:
     print ("-" * 50)
@@ -163,15 +184,23 @@ elif escolha_login == 3:
                 # login efeuado
                 if senha_login == senha:
                     print("-" * 50)
+                    print("Carregando...")
+                    time.sleep(1)
+                    print("Carregamento concluído!")
+                    print("-" * 50)
                     print("LOGIN EFETUADO COM SUCESSO!")
+                    print("-" * 50)
                     print(f"Seja bem vindo(a) {nome}.")
+                    print (f"EMAIL: {email}")
+                    print (f"SENHA: {"*" * len(str(senha))}")
+                    print("-" * 50)
                     break
                 else:
                     tentativas -= 1
                     if tentativas > 0:
                         print(f"Senha incorreta. Tentativas restantes: {tentativas}")
                     else:
-                        print("Voce excedeu o número de tentativas. Tente mais tarde.")
+                        print("Você excedeu o número de tentativas. Tente mais tarde.")
             except ValueError:
                 print("ERRO: A senha deve conter apenas números. Tente novamente!")
 
