@@ -44,24 +44,40 @@ elif escolha == 2:
 
 elif escolha == 3:
     print ("Vamos alterar suas informações.")
-    novo_nome = input("NOME COMPLETO: ")
-    while True:
-        nova_idade = int(input("IDADE: "))
-        if nova_idade <= 17:
-            print("Voce não tem idade o suficiente para fazer login no site!")
-            print("Por favor, insira uma idade válida (18 anos ou mais).")  
-        else:
-            break
-    print("Voce tem idade o suficiente para fazer o login!")
-    print("Digite agora o novo email")
-    novo_email = input("EMAIL: ")
-    print("Digite agora a sua nova senha apenas com números.")
-    while True:
-        try: 
-            nova_senha = int(input("SENHA: "))
-            break
-        except ValueError:
-            print("ERRO: A senha deve conter apenas números. Tente novamente!")
+    confirmar_email = input("Digite o email anterior: ")
+    if confirmar_email == email:
+        print("Voce digitou o email anterior corretamente!")
+        confirmar_senha = int(input("Digite a senha anterior: "))
+        if confirmar_senha == senha:
+            print("Voce digitou a senha corretamente!")
+            print("Agora voce pode realizar alterações.")
+            print("Alterações")
+            novo_nome = input("NOME COMPLETO: ")
+            while True:
+                nova_idade = int(input("IDADE: "))
+                if nova_idade <= 17:
+                    print("Voce não tem idade o suficiente para fazer login no site!")
+                    print("Por favor, insira uma idade válida (18 anos ou mais).")  
+                else:
+                    break
+            print("Voce tem idade o suficiente para fazer o login!")
+            print("Digite agora o novo email")
+            novo_email = input("EMAIL: ")
+            print("Digite agora a sua nova senha apenas com números.")
+            while True:
+                try: 
+                    nova_senha = int(input("SENHA: "))
+                    break
+                except ValueError:
+                    print("ERRO: A senha deve conter apenas números. Tente novamente!")
+
+        else: 
+            print("Senha não encontrada em nosso sistema")
+            exit()
+
+    else:
+        print("Email não encontrado em nosso sistema")
+        exit()
 
     # Atualizando as informações
     nome = novo_nome
@@ -103,6 +119,7 @@ elif escolha_login == 3:
             try:
                 senha_login = int(input("Digite a sua senha numérica: "))
 
+                # login efeuado
                 if senha_login == senha:
                     print("-" * 50)
                     print("LOGIN EFETUADO COM SUCESSO!")
