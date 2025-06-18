@@ -1,6 +1,5 @@
 import time
-from tkinter import *
-
+from tkinter import Tk, Label, Button, Toplevel, Entry, messagebox
 
 """"print ("-" * 50)
 print ("Seja bem vindo(a) ao sistema de login!")
@@ -207,11 +206,85 @@ elif escolha_login == 3:
                 print("ERRO: A senha deve conter apenas números. Tente novamente!")"""
 
 
+nome_registrado = None
 
+def criar_perfil():
+    global nome_registrado # Permite modificar a váriavel global
+
+    # Criar uma nova janela para o registro
+    janela_registro = Toplevel(janela) #sustitui a janela já presente
+    janela_registro.title("Registro")
+    janela_registro.geometry("300x200") # Tamanho da janela
+
+    # Label e Entry para o nome 
+    Label(janela_registro, text="Digite o seu nome: ").pack(pady=10)
+    entrada_nome = Entry(janela_registro)
+    entrada_nome.pack(pady=5)
+
+    # Botão para confirmar
+    def confirmar_registro():
+        global nome_registrado
+        nome = entrada_nome.get()
+        if nome: # Verifica se o nome não está vázio
+            nome_registrado = nome # Armazena o nome registrado
+            messagebox.showinfo("Sucesso", f"Olá, {nome}! Registro concluído.")
+            janela_registro.destroy()
+        else:
+            messagebox.showerror("Erro!", "Por favor, digite um nome válido.")
+
+    Button(janela_registro, text="Confirmar", command=confirmar_registro).pack(pady=15) 
+
+
+def login_perfil():
+    if nome_registrado is None:
+        messagebox.showerror("Erro", "Nenhum usuário registrado ainda.")
+
+    # Criar uma janela para o login
+    janela_login = Toplevel(janela)
+    janela_login.title("Login")
+    janela_login.geometry("300x200")
+
+    # Label e Entry para o nome
+    Label(janela_login, text="Digite o seu nome: ").pack(pady=10)
+    entrada_nome_login = Entry(janela_login)
+    entrada_nome_login.pack(pady=5)
+
+    # Botão para confirmar
+    def confirmar_login():
+        nome_login = entrada_nome_login.get()
+        if nome_login == nome_registrado:
+            messagebox.showinfo("Sucesso!", f"Bem-vindo(a) de volta, {nome_login}!")
+            janela_login.destroy()
+        else:
+            messagebox.showerror("Erro!", "Por favor, digite um nome registrado.")
+
+    Button(janela_login, text="Confirmar", command=confirmar_login).pack(pady=15)
+
+
+# Criação da janela
 janela = Tk() # Cria a janela 
-janela.title("Tela de login") # Define o título da janela
+janela.geometry("300x200") 
+janela.title("Tela Inicial") # Define o título da janela
+
+# Configuração da janela de cadastro do usuário
+titulo_inicial = Label(janela, text="Inicio")
+titulo_inicial.grid(column=0, row=0, pady=10)
+
+texto_orientacao = Label(janela, text="Escolha se você quer realizar um registro ou login")
+texto_orientacao.grid(column=0, row=1, pady=10)
+
+botao_registro = Button(janela, text="Registro", command=criar_perfil) # Botão de criação de perfil
+botao_registro.grid(column=0, row=2, pady=10)
+
+botao_login = Button(janela, text="Login", command=login_perfil) # Botão de login em um perfil já existente
+botao_login.grid(column=0, row=3, pady=10)
+
+texto_registro = Label(janela, text="")
 
 
+
+
+# Finalizando o programa
 janela.mainloop() # Exibe a janela e a mantem exibida sem fechar
 
 
