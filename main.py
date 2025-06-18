@@ -208,9 +208,10 @@ elif escolha_login == 3:
 
 nome_registrado = None
 senha_registrada = None
+email_registrado = None
 
 def criar_perfil():
-    global nome_registrado, senha_registrada, janela # Permite modificar a váriavel global
+    global nome_registrado, senha_registrada, email_registrado, janela # Permite modificar a váriavel global
 
     # Esconde a janela principal temporariamente
     janela.withdraw() 
@@ -218,28 +219,34 @@ def criar_perfil():
     # Criar uma nova janela para o registro
     janela_registro = Toplevel(janela) #sustitui a janela já presente
     janela_registro.title("Registro")
-    janela_registro.geometry("300x200") # Tamanho da janela
+    janela_registro.geometry("300x300") # Tamanho da janela
 
     # Quando fechar a janela de registro, mostra a príncipal novamente
     janela_registro.protocol("WM_DELETE_WINDOW", lambda: [janela_registro.destroy(), janela.deiconify()])
 
-    # Label e Entry para o nome 
+    # Label e Entry para o nome, email e senha
     Label(janela_registro, text="Digite o seu nome: ").pack(pady=10)
     entrada_nome = Entry(janela_registro)
     entrada_nome.pack(pady=5)
 
-    Label(janela_registro, text="Digite sua senha: ").pack(pady=10)
+    Label(janela_registro, text="Email: ").pack(pady=10)
+    entrada_email = Entry(janela_registro)
+    entrada_email.pack(pady=5)
+
+    Label(janela_registro, text="Senha: ").pack(pady=10)
     entrada_senha = Entry(janela_registro, show="*")
     entrada_senha.pack(pady=5)
 
     # Botão para confirmar
     def confirmar_registro():
-        global nome_registrado, senha_registrada
+        global nome_registrado, email_registrado, senha_registrada
         nome = entrada_nome.get()
+        email = entrada_email.get()
         senha = entrada_senha.get()
 
-        if nome and senha: # Verifica se o nome e a senha não estão vázios
+        if nome and email and senha: # Verifica se o nome, email e a senha não estão vázios
             nome_registrado = nome # Armazena o nome registrado
+            email_registrado = email # armazena a senha registrada
             senha_registrada = senha # Armazena a senha registrada
             messagebox.showinfo("Sucesso", f"Olá, {nome}! Registro concluído.")
             janela_registro.destroy()
@@ -251,7 +258,7 @@ def criar_perfil():
 
 
 def login_perfil():
-    if nome_registrado and senha_registrada is None:
+    if nome_registrado and email_registrado and senha_registrada is None:
         messagebox.showerror("Erro", "Nenhum usuário registrado ainda.")
         return
 
@@ -261,26 +268,26 @@ def login_perfil():
     # Criar uma janela para o login
     janela_login = Toplevel(janela)
     janela_login.title("Login")
-    janela_login.geometry("300x200")
+    janela_login.geometry("300x300")
 
     # Quando fechar a janela de login, mostra a príncipal novamente
     janela_login.protocol("WM_DELETE_WINDOW", lambda: [janela_login.destroy(), janela.deiconify()])
 
-    # Label e Entry para o nome
-    Label(janela_login, text="Digite o seu nome: ").pack(pady=10)
-    entrada_nome_login = Entry(janela_login)
-    entrada_nome_login.pack(pady=5)
+    # Label e Entry para o email e a senha
+    Label(janela_login, text="Email: ").pack(pady=10)
+    entrada_email_login = Entry(janela_login)
+    entrada_email_login.pack(pady=5)
 
-    Label(janela_login, text="Digite a sua senha: ").pack(pady=10)
-    entrada_senha_login = Entry(janela_login)
+    Label(janela_login, text="Senha: ").pack(pady=10)
+    entrada_senha_login = Entry(janela_login, show="*")
     entrada_senha_login.pack(pady=5)
 
     # Botão para confirmar
     def confirmar_login():
-        nome_login = entrada_nome_login.get()
+        email_login = entrada_email_login.get()
         senha_login = entrada_senha_login.get()
-        if nome_login == nome_registrado and senha_login == senha_registrada:
-            messagebox.showinfo("Sucesso!", f"Bem-vindo(a) de volta, {nome_login}!")
+        if email_login == email_registrado and senha_login == senha_registrada:
+            messagebox.showinfo("Sucesso!", f"Bem-vindo(a) de volta, {nome_registrado}!")
             janela_login.destroy()
             janela.deiconify() # Mostra a janela príncipal novamente
         else:
@@ -288,28 +295,33 @@ def login_perfil():
 
     Button(janela_login, text="Confirmar", command=confirmar_login).pack(pady=15)
 
+# Criando fontes personalizadas
+fonte_titulo = ("Arial", 14, "bold") # Fonte para o titulo
+fonte_texto = ("Arial", 12) # Fonte para textos normais
+fonte_botao = ("Arial", 12, "bold") # Fonte para os botões
+
 
 # Criação da janela
 janela = Tk() # Cria a janela 
-janela.geometry("300x200") 
+janela.geometry("400x400") 
 janela.title("Tela Inicial") # Define o título da janela
 
 # Configuração da janela de cadastro do usuário
-titulo_inicial = Label(janela, text="Inicio")
-titulo_inicial.grid(column=0, row=0, pady=10)
+titulo_inicial = Label(janela, text="Inicio", font=fonte_titulo)
+titulo_inicial.grid(column=0, row=0, pady=20)
 
-texto_orientacao = Label(janela, text="Escolha se você quer realizar um registro ou login")
+texto_orientacao = Label(janela, text="Escolha se você quer realizar um registro ou login", font=fonte_texto)
 texto_orientacao.grid(column=0, row=1, pady=10)
 
-botao_registro = Button(janela, text="Registro", command=criar_perfil) # Botão de criação de perfil
+botao_registro = Button(janela, text="Registro", command=criar_perfil, font=fonte_botao, width=15) # Botão de criação de perfil
 botao_registro.grid(column=0, row=2, pady=10)
 
-botao_login = Button(janela, text="Login", command=login_perfil) # Botão de login em um perfil já existente
+botao_login = Button(janela, text="Login", command=login_perfil, font=fonte_botao, width=15) # Botão de login em um perfil já existente
 botao_login.grid(column=0, row=3, pady=10)
 
+
+
 texto_registro = Label(janela, text="")
-
-
 
 
 # Finalizando o programa
