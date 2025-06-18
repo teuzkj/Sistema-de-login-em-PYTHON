@@ -207,9 +207,11 @@ elif escolha_login == 3:
 
 
 nome_registrado = None
+senha_registrada = None
 
 def criar_perfil():
     global nome_registrado # Permite modificar a váriavel global
+    global senha_registrada
 
     # Criar uma nova janela para o registro
     janela_registro = Toplevel(janela) #sustitui a janela já presente
@@ -221,22 +223,29 @@ def criar_perfil():
     entrada_nome = Entry(janela_registro)
     entrada_nome.pack(pady=5)
 
+    Label(janela_registro, text="Digite sua senha: ").pack(pady=10)
+    entrada_senha = Entry(janela_registro, show="*")
+    entrada_senha.pack(pady=5)
+
     # Botão para confirmar
     def confirmar_registro():
-        global nome_registrado
+        global nome_registrado, senha_registrada
         nome = entrada_nome.get()
-        if nome: # Verifica se o nome não está vázio
+        senha = entrada_senha.get()
+
+        if nome and senha: # Verifica se o nome e a senha não estão vázios
             nome_registrado = nome # Armazena o nome registrado
+            senha_registrada = senha # Armazena a senha registrada
             messagebox.showinfo("Sucesso", f"Olá, {nome}! Registro concluído.")
             janela_registro.destroy()
         else:
-            messagebox.showerror("Erro!", "Por favor, digite um nome válido.")
+            messagebox.showerror("Erro!", "Preencha o nome e a senha de forma válida.")
 
     Button(janela_registro, text="Confirmar", command=confirmar_registro).pack(pady=15) 
 
 
 def login_perfil():
-    if nome_registrado is None:
+    if nome_registrado and senha_registrada is None:
         messagebox.showerror("Erro", "Nenhum usuário registrado ainda.")
 
     # Criar uma janela para o login
@@ -249,14 +258,19 @@ def login_perfil():
     entrada_nome_login = Entry(janela_login)
     entrada_nome_login.pack(pady=5)
 
+    Label(janela_login, text="Digite a sua senha: ").pack(pady=10)
+    entrada_senha_login = Entry(janela_login)
+    entrada_senha_login.pack(pady=5)
+
     # Botão para confirmar
     def confirmar_login():
         nome_login = entrada_nome_login.get()
-        if nome_login == nome_registrado:
+        senha_login = entrada_senha_login.get()
+        if nome_login == nome_registrado and senha_login == senha_registrada:
             messagebox.showinfo("Sucesso!", f"Bem-vindo(a) de volta, {nome_login}!")
             janela_login.destroy()
         else:
-            messagebox.showerror("Erro!", "Por favor, digite um nome registrado.")
+            messagebox.showerror("Erro!", "Por favor, digite um nome ou senha já registrados.")
 
     Button(janela_login, text="Confirmar", command=confirmar_login).pack(pady=15)
 
