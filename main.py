@@ -210,13 +210,18 @@ nome_registrado = None
 senha_registrada = None
 
 def criar_perfil():
-    global nome_registrado # Permite modificar a váriavel global
-    global senha_registrada
+    global nome_registrado, senha_registrada, janela # Permite modificar a váriavel global
+
+    # Esconde a janela principal temporariamente
+    janela.withdraw() 
 
     # Criar uma nova janela para o registro
     janela_registro = Toplevel(janela) #sustitui a janela já presente
     janela_registro.title("Registro")
     janela_registro.geometry("300x200") # Tamanho da janela
+
+    # Quando fechar a janela de registro, mostra a príncipal novamente
+    janela_registro.protocol("WM_DELETE_WINDOW", lambda: [janela_registro.destroy(), janela.deiconify()])
 
     # Label e Entry para o nome 
     Label(janela_registro, text="Digite o seu nome: ").pack(pady=10)
@@ -238,6 +243,7 @@ def criar_perfil():
             senha_registrada = senha # Armazena a senha registrada
             messagebox.showinfo("Sucesso", f"Olá, {nome}! Registro concluído.")
             janela_registro.destroy()
+            janela.deiconify() # Mostra a janela príncipal novamente
         else:
             messagebox.showerror("Erro!", "Preencha o nome e a senha de forma válida.")
 
@@ -247,11 +253,18 @@ def criar_perfil():
 def login_perfil():
     if nome_registrado and senha_registrada is None:
         messagebox.showerror("Erro", "Nenhum usuário registrado ainda.")
+        return
+
+    # Esconde a janela príncipal 
+    janela.withdraw()
 
     # Criar uma janela para o login
     janela_login = Toplevel(janela)
     janela_login.title("Login")
     janela_login.geometry("300x200")
+
+    # Quando fechar a janela de login, mostra a príncipal novamente
+    janela_login.protocol("WM_DELETE_WINDOW", lambda: [janela_login.destroy(), janela.deiconify()])
 
     # Label e Entry para o nome
     Label(janela_login, text="Digite o seu nome: ").pack(pady=10)
@@ -269,6 +282,7 @@ def login_perfil():
         if nome_login == nome_registrado and senha_login == senha_registrada:
             messagebox.showinfo("Sucesso!", f"Bem-vindo(a) de volta, {nome_login}!")
             janela_login.destroy()
+            janela.deiconify() # Mostra a janela príncipal novamente
         else:
             messagebox.showerror("Erro!", "Por favor, digite um nome ou senha já registrados.")
 
