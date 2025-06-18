@@ -1,6 +1,8 @@
 import time
+from tkinter import *
 
-print ("-" * 50)
+
+""""print ("-" * 50)
 print ("Seja bem vindo(a) ao sistema de login!")
 print ("Vamos começar")
 print ("-" * 50)
@@ -202,7 +204,15 @@ elif escolha_login == 3:
                     else:
                         print("Você excedeu o número de tentativas. Tente mais tarde.")
             except ValueError:
-                print("ERRO: A senha deve conter apenas números. Tente novamente!")
+                print("ERRO: A senha deve conter apenas números. Tente novamente!")"""
+
+
+
+janela = Tk() # Cria a janela 
+janela.title("Tela de login") # Define o título da janela
+
+
+janela.mainloop() # Exibe a janela e a mantem exibida sem fechar
 
 
 
