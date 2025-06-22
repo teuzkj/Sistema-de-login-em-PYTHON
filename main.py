@@ -1,6 +1,7 @@
 import time
 from tkinter import Tk, Label, Button, Toplevel, Entry, Frame, messagebox
 
+
 nome_registrado = None
 idade_registrada = None
 senha_registrada = None
@@ -48,24 +49,24 @@ def criar_perfil():
             messagebox.showerror("Erro!", "Preencha todas as informações de forma válida.")
 
     # Frame para os campos de entrada
-    frame_campos = Frame(frame_principal)
-    frame_campos.pack(fill="both", expand=True)
+    frame_campos_registro = Frame(frame_principal)
+    frame_campos_registro.pack(fill="both", expand=True)
 
     # Label e Entry para o nome, email e senha dentro do frame_campos
-    Label(frame_campos, text="Nome completo: ", font=fonte_botao).pack(pady=10)
-    entrada_nome = Entry(frame_campos)
+    Label(frame_campos_registro, text="Nome completo: ", font=fonte_botao).pack(pady=10)
+    entrada_nome = Entry(frame_campos_registro)
     entrada_nome.pack(pady=5, fill="x")
 
-    Label(frame_campos, text="Idade: ", font=fonte_botao).pack(pady=10)
-    entrada_idade = Entry(frame_campos)
+    Label(frame_campos_registro, text="Idade: ", font=fonte_botao).pack(pady=10)
+    entrada_idade = Entry(frame_campos_registro)
     entrada_idade.pack(pady=5, fill="x")
 
-    Label(frame_campos, text="Email: ", font=fonte_botao).pack(pady=10)
-    entrada_email = Entry(frame_campos)
+    Label(frame_campos_registro, text="Email: ", font=fonte_botao).pack(pady=10)
+    entrada_email = Entry(frame_campos_registro)
     entrada_email.pack(pady=5, fill="x")
 
-    Label(frame_campos, text="Senha: ", font=fonte_botao).pack(pady=10)
-    entrada_senha = Entry(frame_campos, show="*")
+    Label(frame_campos_registro, text="Senha: ", font=fonte_botao).pack(pady=10)
+    entrada_senha = Entry(frame_campos_registro, show="*")
     entrada_senha.pack(pady=5, fill="x")
 
     # Frame para os botões
@@ -87,38 +88,53 @@ def login_perfil():
     # Criar uma janela para o login
     janela_login = Toplevel(janela)
     janela_login.title("Login")
-    janela_login.geometry("300x300")
+    janela_login.geometry("300x500")
+
+    # Frame principal
+    frame_principal = Frame(janela_login)
+    frame_principal.pack(pady=20, padx=20, fill="both", expand=True)
 
     # Quando fechar a janela de login, mostra a príncipal novamente
     janela_login.protocol("WM_DELETE_WINDOW", lambda: [janela_login.destroy(), janela.deiconify()])
 
-    # Label e Entry para o email e a senha
-    Label(janela_login, text="Email: ", font=fonte_botao).pack(pady=10)
-    entrada_email_login = Entry(janela_login)
-    entrada_email_login.pack(pady=5)
-
-    Label(janela_login, text="Senha: ", font=fonte_botao).pack(pady=10)
-    entrada_senha_login = Entry(janela_login, show="*")
-    entrada_senha_login.pack(pady=5)
-
-    # Botão para confirmar
+    # Botão para confirmar login - Definido antes de ser usado
     def confirmar_login():
-        email_login = entrada_email_login.get()
-        senha_login = entrada_senha_login.get()
+        email_login = entrada_email_login.get().strip()
+        senha_login = entrada_senha_login.get().strip()
         if email_login == email_registrado and senha_login == senha_registrada:
-            messagebox.showinfo("Sucesso!", f"Bem-vindo(a) de volta, {nome_registrado}!")
+            messagebox.showinfo("Sucesso!", f"Bem vindo(a) de volta, {nome_registrado}!")
             janela_login.destroy()
-            janela.deiconify() # Mostra a janela príncipal novamente
+            janela.deiconify() # Mostra a janella principal novamente
         else:
             messagebox.showerror("Erro!", "Por favor, digite um nome ou senha já registrados.")
 
-    Button(janela_login, text="Confirmar", command=confirmar_login).pack(pady=15)
+    # Frame para os campos de entrada 
+    frame_campos_login = Frame(frame_principal)
+    frame_campos_login.pack(fill="both", expand=True)
+
+    # Label e Entry para o email e a senha
+    Label(frame_campos_login, text="Email: ", font=fonte_botao).pack(pady=10)
+    entrada_email_login = Entry(frame_campos_login)
+    entrada_email_login.pack(pady=5, fill="x")
+
+    Label(frame_campos_login, text="Senha: ", font=fonte_botao).pack(pady=10)
+    entrada_senha_login = Entry(frame_campos_login, show="*")
+    entrada_senha_login.pack(pady=5, fill="x")
+
+    # Frame para os botões (Na parte inferior)
+    frame_botoes_login = Frame(frame_principal)
+    frame_botoes_login.pack(side="bottom", pady=20, fill="x")
+
+    # Botão confirmar
+    Button(frame_botoes_login, text="Confirmar", command=confirmar_login, font=fonte_botao).pack(side="left", padx=10, expand=True, fill="x")
+
+    # Botão voltar 
+    Button(frame_botoes_login, text="Voltar", command=lambda: [janela_login.destroy(), janela.deiconify()], font=fonte_botao).pack(side="right", padx=10, expand=True, fill="x")
 
 # Criando fontes personalizadas
 fonte_titulo = ("Arial", 14, "bold") # Fonte para o titulo
 fonte_texto = ("Arial", 12) # Fonte para textos normais
 fonte_botao = ("Arial", 12, "bold") # Fonte para os botões
-
 
 # Criação da janela
 janela = Tk() # Cria a janela 
@@ -146,7 +162,6 @@ botao_login.grid(column=0, row=3, pady=10)
 
 texto_informações = Label(janela, text="Feito por: Matheus de Paula Azevedo", font=fonte_texto)
 texto_informações.grid(column=0, row=4, pady=10)
-
 
 
 # Finalizando o programa
